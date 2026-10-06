@@ -1,0 +1,49 @@
+import type { Metadata } from "next";
+import { Inter, Poppins } from "next/font/google";
+
+import "./globals.css";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { EditProvider } from "@/lib/edit/edit-context";
+import { SiteChrome } from "@/components/layout/site-chrome";
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Pathology MCQ | FRCPath, NEET-SS, MD/DNB Exam Prep",
+    template: "%s | Pathology MCQ",
+  },
+  description:
+    "Image-rich pathology MCQ practice, subspecialty courses, and full-length mock tests for FRCPath, NEET-SS, INI-SS, MD/DNB and APCP trainees.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${poppins.variable} ${inter.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-canvas text-ink-900">
+        <QueryProvider>
+          <EditProvider>
+            <SiteChrome>{children}</SiteChrome>
+          </EditProvider>
+        </QueryProvider>
+      </body>
+    </html>
+  );
+}
